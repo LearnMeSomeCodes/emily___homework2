@@ -2,7 +2,7 @@ def get_answer
 	menu = ["create", "view", "delete", "quit"]
 	entry = ""
 	while not menu.include? entry do
-		puts "\nWelcome to your address book main menu!\n
+		puts "\n\nWelcome to your address book main menu!\n
 What would you like to do?\n
 Enter \"create\" to create a new entry
 Enter \"view\" to view an existing entry
@@ -48,13 +48,31 @@ def assign_answer
 		end
 	
 	elsif menu_entry == "view"
-		puts "View an existing entry"
+
+		def print_address_book (x)
+			puts "\n**************************************"
+			x.length.times do |index|
+				print index," ",x[index][1],", ",x[index][0]
+				puts""
+			end
+			puts "**************************************"
+		end
+
+		### Note this address book info is filler until I can figure out how to keep the array populated ###
+		address_book = [["Emily", "DuBois", "512-466-5165", "emilymdubois@gmail.com"],["Alex", "Ford", "555-555-5555", "alexford@gmail.com"]]
+		y = print_address_book(address_book)
+
+		loop do
+			assign_answer
+			break if get_answer == "quit"
+		end
 	
 	elsif menu_entry == "delete"
 		puts "Delete an existing entry"
 	
 	elsif menu_entry == "quit"
-		puts "Goodbye!"
+		puts "\nGoodbye!"
+		puts ""
 		exit
 	
 	end
