@@ -2,10 +2,10 @@ def get_answer
 	menu = ["create", "view", "delete", "quit"]
 	entry = ""
 	while not menu.include? entry do
-		puts "\nEnter \"create\" to create a new entry
-Enter \"view\" to view an existing entry
-Enter \"delete\" to delete an existing entry
-Enter \"quit\" to quit the application\n\n"
+		puts "\nEnter \"create\" to create a new entry.
+Enter \"view\" to view an existing entry.
+Enter \"delete\" to delete an existing entry.
+Enter \"quit\" to quit the application.\n\n"
 		entry = gets.chomp
 		if not menu.include? entry 
 			puts "\nUnfortunately this is not a menu item. Please try again.\n"
