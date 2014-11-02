@@ -1,7 +1,47 @@
 def get_answer
+  ### Thought: You reference these same words later in the code
+  ###          as part of your conditional.  Therefore, it might
+  ###          be a good idea to define these as constants:
+  ###
+  ###            Create = "create"
+  ###            View   = "view"
+  ###            Delete = "delete"
+  ###            Quit   = "quit"
+  ###            MainMenu = [Create, View, Delete, Quit]
+  ###
+  ###          This way, if you decide to change the value later,
+  ###          you will only need to update the code in one place.
 	menu = ["create", "view", "delete", "quit"]
+
 	entry = ""
+  ### Thought 1: You actually check this condition twice (Once here,
+  ###            and once at the end of the loop's body).
+  ### Thought 2: Furthermore, this conditional never actually evaluates
+  ###            to true in your code.  Why?  Because this method
+  ###            calls 'return', which will force the execution to
+  ###            exit the loop.  So, you really could just replace
+  ###            this 'while' statement with:
+  ###
+  ###              loop do
+  ###                # body of the loop
+  ###              end
+  ###
 	while not menu.include? entry do
+    ### FYI: Ruby provides several ways to declare Strings.
+    ###      If you find yourself having to escape " characters
+    ###      a lot, then try using %Q{}
+    ###
+    ###        text = %Q{This contains "double-quotes"
+    ###                  and 'single-quotes'}
+    ###
+    ###      The %Q{} trick is handy because it allows you to
+    ###      choose from many different string delimiters.  Examples:
+    ###
+    ###        text = %Q[Square brackets]
+    ###        text = %Q(Parentheses)
+    ###        text = %Q/Slashes/
+    ###
+    ###      So, you can pick the one that makes your life easiest.
 		puts "\nEnter \"create\" to create a new entry.
 Enter \"view\" to view an existing entry.
 Enter \"delete\" to delete an existing entry.
@@ -20,6 +60,11 @@ def assign_answer (a)
 	
 	if menu_entry == "create"
 
+    ### Thought:  Woah!  Fancy!  Is there any reason you decided to
+    ###           use a lambda here rather than defining a method?
+    ###           Both approaches accomplish the same thing, but
+    ###           lambdas are usually only used when you want to
+    ###           construct an 'anonymous' function.
 		new_entry = lambda do
 			address_book_temp = []
 			puts "\nYou are adding a new entry.\n\n"
@@ -39,9 +84,18 @@ def assign_answer (a)
 			return address_book_temp
 		end
 
+    ### Though: Hmm.  It looks like you decided to represent address
+    ###         book entries as Arrays of 4 elements.  Can you think
+    ###         of any advantages to using a Hash for this instead?
 		a << new_entry.call
 		puts a
 
+
+    ### Thought: It looks like you are accomplishing the main menu
+    ###          loop by calling the assign_answer method recursively.
+    ###          Suppose you accomplished this by using a looping
+    ###          construct instead (ex: while, until, loop, etc).
+    ###          How would this change the structure of the code?
 		loop do
 			assign_answer(a)
 			break if get_answer == "quit"
@@ -59,6 +113,12 @@ def assign_answer (a)
 			print "\nWhich entry would you like to view (enter \"9999\" to return to main menu)? "
 			index = gets.chomp.to_i
 			if a.empty?
+        ### Good catch!  I forgot to mention anything about the
+        ### "What if the address book is empty" scenario when I
+        ### specified the assignment.
+        ###
+        ### Question: What would be the advantage of performing this
+        ###           emptiness check earlier in the code?
 				puts "\nWhoops it looks like the array is empty!\nRedirecting you to the main menu..."
 				loop do
 					assign_answer(a)
